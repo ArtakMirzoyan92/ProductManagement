@@ -19,7 +19,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<TestDbContext>(option =>
-   option.UseSqlServer(builder.Configuration.GetConnectionString("ProductManagmentConnectionString"))
+   option.UseSqlServer(builder.Configuration.GetConnectionString("ProductManagementConnectionString"))
   );
 
 var app = builder.Build();

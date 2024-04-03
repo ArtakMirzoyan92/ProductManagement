@@ -1,7 +1,7 @@
-﻿const successForUpdateMessage = 'Обновление прошло успешно';
-const errorForUpdateMessage = 'Обновление не выполнено';
-const successForAddMessage = 'Продукт успешно сохранен';
-const errorForAddMessage = 'Сохранение невыполнение';
+﻿const successForUpdateMessage = 'Update successful';
+const errorForUpdateMessage = 'Update failed';
+const successForAddMessage = 'The product has been added';
+const errorForAddMessage = 'Product not saved';
 const apiUrl = 'https://localhost:7079/api/Product';
 
 document.addEventListener("DOMContentLoaded", function (event) {
