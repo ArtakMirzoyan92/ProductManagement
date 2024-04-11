@@ -2,9 +2,10 @@
 const errorForUpdateMessage = 'Update failed';
 const successForAddMessage = 'The product has been added';
 const errorForAddMessage = 'Product not saved';
+const productExists = 'Product Exists';
 const apiUrl = 'https://localhost:7079/api/Product';
 
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function () {
     fetchProductList();
 
     document.getElementById('searchInput').addEventListener('input', function (event) {
@@ -54,26 +55,34 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 async function addProduct(productData) {
     try {
-        const response = await fetch(`${apiUrl}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productData)
-        });
-        const data = await response.json();
-        console.log(data);
-        if (response.ok) {
-            document.getElementById('productName').value = '';
-            document.getElementById('productDescription').value = '';
-            showNotification(successForAddMessage);
-            renderProductList();
+        let product = await productAvailabilityt(productData.Name);
+        if (product != '') {
+            showNotification(productExists);
         }
+        else {
+            const response = await fetch(`${apiUrl}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productData)
+            });
+            const data = await response.json();
+            console.log(data);
+        
+            if (response.ok) {
+                document.getElementById('productName').value = '';
+                document.getElementById('productDescription').value = '';
+                showNotification(successForAddMessage);
+                renderProductList();
+            }
+}
     } catch (error) {
         showNotification(errorForAddMessage);
         console.error('Error:', error);
     }
 }
+
 
 async function updateProduct() {
     const productId = document.getElementById('editProductId').value;
@@ -156,13 +165,13 @@ function render(data) {
 
 async function fetchProductsBySearchTerm(searchTerm) {
     try {
-        
+
         if (!searchTerm.trim()) {
 
             fetchProductList()
             return;
         }
-       
+
         const response = await fetch(`${apiUrl}/GetByName?name=${searchTerm}`, {
             method: 'GET'
         });
@@ -193,4 +202,24 @@ function showNotification(message) {
     setTimeout(() => {
         notification.remove();
     }, 3000);
+}
+
+async function productAvailabilityt(item) {
+    try {
+        const response = await fetch(`${apiUrl}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].name == item) {
+                return productExists;
+            }
+        }
+        return '';
+
+    } catch (error) {
+        console.error('Error exists product:', error);
+    }
+
 }
