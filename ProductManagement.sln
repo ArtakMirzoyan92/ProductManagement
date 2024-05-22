@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductManagement.API", "ProductManagement.API\ProductManagement.API.csproj", "{E9F3BB11-9914-4FE3-AD32-7B838C0DAE2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagement.MVC", "ProductManagement.MVC\ProductManagement.MVC.csproj", "{B42FAB03-7449-4BF5-B7EB-F4D7060B512A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductManagement.MVC", "ProductManagement.MVC\ProductManagement.MVC.csproj", "{B42FAB03-7449-4BF5-B7EB-F4D7060B512A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLScript", "SQLScript", "{2959F1FD-4351-4294-A6D5-69B732C05B01}"
+	ProjectSection(SolutionItems) = preProject
+		SQLScriptForCreateDB.sql = SQLScriptForCreateDB.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
