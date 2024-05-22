@@ -1,13 +1,13 @@
 ﻿ --    SQL Script
 
- --1) Создание DB TestDb
+ --1) Create DB TestDb
 CREATE DATABASE TestDb;
 GO
 
 USE TestDb
 GO
 
---2) Таблица Product
+--2) Table Product
 CREATE TABLE Product 
 (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -16,12 +16,12 @@ CREATE TABLE Product
 );
 GO
 
--- Индекс для поле Name
+-- Index for field Name
 CREATE NONCLUSTERED INDEX IX_Product_Name ON Product ([Name])
 WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 GO
 
---3) Таблица ProductVersion
+--3) Table ProductVersion
 CREATE TABLE ProductVersion 
 (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -38,7 +38,7 @@ CREATE TABLE ProductVersion
 );
 GO
 
--- Индксы для полей Name, CreatingDate, Width, Height ? Length
+-- Indexes for fields Name, CreatingDate, Width, Height ? Length
 CREATE NONCLUSTERED INDEX IX_ProductVersion_Name ON ProductVersion ([Name])
 WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 
@@ -55,7 +55,7 @@ CREATE NONCLUSTERED INDEX IX_ProductVersion_Length ON ProductVersion ([Length])
 WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 GO
 
---4) Таблица EventLog
+--4) Table EventLog
 CREATE TABLE EventLog 
 (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -64,7 +64,7 @@ CREATE TABLE EventLog
 );
 GO
 
--- Индекс для поле EventDate
+-- Index for field EventDate
 CREATE NONCLUSTERED INDEX IX_EventLog_EventDate ON EventLog(EventDate) 
 WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 GO
@@ -204,7 +204,7 @@ RETURN
 );
 GO
 
---    Тестовые данные
+--    Test data
 
 INSERT INTO Product (Name, Description)
 VALUES ('Product 1', 'Description for Product 1'),
