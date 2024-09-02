@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>      
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add Product</h2>
+        <br />
+        <form id="addProductForm">
+            <div class="form-group">
+                <label for="productName">Name</label>
+                <input type="text" class="form-control" id="productName" required>              
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Description</label>
+                <textarea class="form-control" id="productDescription" rows="5"></textarea>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+        <br />
+
+        <h2>Search Products</h2>
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search products...">
+        </div>
+
+        <h2 class="mt-5">Products</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="productList">
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editProductName">Name:</label>
+                        <input type="text" class="form-control" id="editProductName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editProductDescription">Description:</label>
+                        <textarea class="form-control" id="editProductDescription" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" id="editProductId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
