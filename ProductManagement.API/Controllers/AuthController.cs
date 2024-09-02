@@ -1,33 +1,31 @@
 ﻿using BusinessLayer.Constants;
 using BusinessLayer.IServices;
-using BusinessLayer.Models;
+using BusinessLayer.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProductManagement.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    [Route("api/[controller]/[action]")]
+    public class AuthController : ControllerBase
     {
-        private IUsersService _usersService;
-        private IConfiguration _configuration;
+        private IUsersService _usersService;       
 
-        public UserController(IUsersService usersService, IConfiguration configuration)
+        public AuthController(IUsersService usersService)
         {
             _usersService = usersService;
-            _configuration = configuration;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Register(CreateUserDto createUser)
+        public async Task<IActionResult> Register(UserRegisterRequest createUser)
         {
-            await _usersService.AddUserAsync(createUser);
-            return Ok();
+            UserResponse response = await _usersService.AddUserAsync(createUser);
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginUserRequest user)
+        public async Task<IActionResult> Login(UserLoginRequest user)
         {
             string token = await _usersService.GetByEmailAsync(user.Email, user.PasswordHash);
 

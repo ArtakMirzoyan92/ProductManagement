@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BusinessLayer.Extensions
 {
-    public static class ApiExtensions
+    public static class AuthExtensions
     {
         public static void AddApiAuthentication(
             this IServiceCollection services,

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Azure;
 using BusinessLayer.IProviders;
 using BusinessLayer.IServices;
-using BusinessLayer.Models;
+using BusinessLayer.Models.Auth;
 using DataAccessLayer.Entities;
 using DataAccessLayer.IRepositories;
 
@@ -25,7 +26,7 @@ namespace BusinessLayer.Services
             _mapper = mapper;
         }
 
-        public async Task AddUserAsync(CreateUserDto userDto)
+        public async Task<UserResponse> AddUserAsync(UserRegisterRequest userDto)
         {
 
             User newUser = _mapper.Map<User>(userDto);
@@ -33,7 +34,9 @@ namespace BusinessLayer.Services
             newUser.Id = Guid.NewGuid();
             newUser.PasswordHash = _passwordHasher.GenerateHash(userDto.PasswordHash);
 
-            await _userRepository.AddUserAsync(newUser);
+            UserResponse response = _mapper.Map<UserResponse>(await _userRepository.AddUserAsync(newUser));
+
+            return response;
         }
 
         public async Task<string> GetByEmailAsync(string userEmail, string password)

@@ -14,10 +14,12 @@ namespace DataAccessLayer.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task<User> AddUserAsync(User user)
         {
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
+
+            return user;
         }
 
         public async Task<User> GetByEmailAsync(string userEmail)

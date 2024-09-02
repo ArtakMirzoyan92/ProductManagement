@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLayer.IServices;
-using BusinessLayer.Models;
+using BusinessLayer.Models.Product;
 using DataAccessLayer.Entities;
 using DataAccessLayer.IRepositories;
 
@@ -18,57 +18,58 @@ namespace BusinessLayer.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ProductDto>> GetAllAsync()
+        public async Task<List<ProductResponse>> GetAllAsync()
         {
-            List<ProductDto> listProductDto = null;
+            List<ProductResponse> listProductDto = null;
             List<Product> allProduct = await _repository.AllProductAsync();
             if (allProduct != null)
             {
-                listProductDto = new List<ProductDto>();
+                listProductDto = new List<ProductResponse>();
 
                 foreach (var product in allProduct)
                 {
 
-                    listProductDto.Add(_mapper.Map<ProductDto>(product));
+                    listProductDto.Add(_mapper.Map<ProductResponse>(product));
                 }
             }
             return listProductDto;
         }
 
-        public async Task<ProductDto> AddProductAsync(ProductDto productDto)
+        public async Task<List<ProductResponse>> GetNameByFilterAsync(string name)
         {
-            Product product = _mapper.Map<Product>(productDto);
-            Product productCreated = await _repository.AddAsync(product);
-            return _mapper.Map<ProductDto>(productCreated);
-        }
-
-        public async Task<bool> DeleteAsync(Guid productId)
-        {
-            return await _repository.DeleteAsync(productId);
-        }
-
-        public async Task<List<ProductDto>> GetNameByFilterAsync(string name)
-        {
-            List<ProductDto> listProductDto = null;
+            List<ProductResponse> listProductDto = null;
             if (!string.IsNullOrWhiteSpace(name))
             {
                 List<Product> allProduct = await _repository.GetNameByFilterAsync(name);
                 if (allProduct != null)
                 {
-                    listProductDto = new List<ProductDto>();
+                    listProductDto = new List<ProductResponse>();
                     foreach (var product in allProduct)
                     {
-                        listProductDto.Add(_mapper.Map<ProductDto>(product));
+                        listProductDto.Add(_mapper.Map<ProductResponse>(product));
                     }
                 }
             }
             return listProductDto;
         }
 
-        public async Task<bool> UpdateAsync(ProductDto productDto)
+        public async Task<ProductResponse> AddProductAsync(ProductRequest productDto)
         {
             Product product = _mapper.Map<Product>(productDto);
+            Product productCreated = await _repository.AddAsync(product);
+            return _mapper.Map<ProductResponse>(productCreated);
+        }
+
+        public async Task<bool> UpdateAsync(ProductUpdateRequest productDto)
+        {
+            Product product = _mapper.Map<Product>(productDto);
+
             return await _repository.UpdateAsync(product);
+        }
+
+        public async Task<bool> DeleteAsync(Guid productId)
+        {
+            return await _repository.DeleteAsync(productId);
         }
     }
 }

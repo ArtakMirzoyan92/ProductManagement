@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BusinessLayer.Models;
+using BusinessLayer.Models.Auth;
+using BusinessLayer.Models.Product;
 using DataAccessLayer.Entities;
 
 namespace BusinessLayer.Profiles
@@ -8,9 +9,12 @@ namespace BusinessLayer.Profiles
     {
         public ProductProfile()
         {
-            CreateMap<ProductDto, Product>().ReverseMap(); 
-            
-            CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<Product, ProductRequest>().ReverseMap();
+            CreateMap<Product, ProductResponse>().ReverseMap();
+            CreateMap<Product, ProductUpdateRequest>().ReverseMap();
+
+            CreateMap<User, UserResponse>().ReverseMap();
+            CreateMap<User, UserRegisterRequest>().ReverseMap();
 
         }
     }

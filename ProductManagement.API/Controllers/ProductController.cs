@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.IServices;
-using BusinessLayer.Models;
+using BusinessLayer.Models.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,37 +17,40 @@ namespace ProductManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ProductDto>> GetAllProduct()
+        public async Task<IActionResult> GetAllProduct()
         {
-            var allProduct = await _productService.GetAllAsync();
-            return allProduct;
+            IList<ProductResponse> response = await _productService.GetAllAsync();
+
+            return Ok(response);
         }
 
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetProductsByFilter(string name)
         {
-            var product = await _productService.GetNameByFilterAsync(name);
-            return Ok(product);
+            var response = await _productService.GetNameByFilterAsync(name);
+
+            return Ok(response);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post(ProductDto productDto)
+        public async Task<IActionResult> Post(ProductRequest productDto)
         {
-            var product = await _productService.AddProductAsync(productDto);
-            return Ok(product);
+            ProductResponse response = await _productService.AddProductAsync(productDto);
+
+            return Ok(response);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
-        public async Task<IActionResult> Put(ProductDto productDto)
+        public async Task<IActionResult> Put(ProductUpdateRequest productDto)
         {
             var isUpdated = await _productService.UpdateAsync(productDto);
             if (isUpdated)
             {
-                return Ok();
+                return Ok(isUpdated);
             }
-            return BadRequest();
+            return BadRequest(isUpdated);
         }
 
         [Authorize]
@@ -57,9 +60,9 @@ namespace ProductManagement.API.Controllers
             var isDeleted = await _productService.DeleteAsync(productId);
             if (isDeleted)
             {
-                return Ok();
+                return Ok(isDeleted);
             }
-            return BadRequest();
+            return BadRequest(isDeleted);
         }
     }
 }

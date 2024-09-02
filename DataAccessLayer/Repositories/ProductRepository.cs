@@ -24,6 +24,24 @@ namespace DataAccessLayer.Repositories
             return product;
         }
 
+        public async Task<List<Product>> GetNameByFilterAsync(string name)
+        {
+            return await _dbContext.Products.Where(x => x.Name.Contains(name)).ToListAsync();
+        }
+
+        public async Task<bool> UpdateAsync(Product product)
+        {
+            var productExits = await _dbContext.Products.AsNoTracking()
+                                                        .FirstOrDefaultAsync(x => x.Id == product.Id);
+
+            if (productExits != null)
+            {
+                _dbContext?.Products.Update(product);
+
+                return await _dbContext.SaveChangesAsync() > 0;
+            }
+            return false;
+        }
         public async Task<bool> DeleteAsync(Guid productId)
         {
             Product product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
@@ -33,17 +51,6 @@ namespace DataAccessLayer.Repositories
                 return await _dbContext.SaveChangesAsync() > 0;
             }
             return false;
-        }
-
-        public async Task<List<Product>> GetNameByFilterAsync(string name)
-        {
-            return await _dbContext.Products.Where(x => x.Name.Contains(name)).ToListAsync();
-        }
-
-        public async Task<bool> UpdateAsync(Product product)
-        {
-            _dbContext?.Products.Update(product);
-            return await _dbContext.SaveChangesAsync() > 0;
         }
 
     }
