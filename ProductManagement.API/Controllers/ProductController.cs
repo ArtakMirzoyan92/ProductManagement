@@ -32,7 +32,6 @@ namespace ProductManagement.API.Controllers
             return Ok(response);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(ProductRequest productDto)
         {
@@ -41,7 +40,7 @@ namespace ProductManagement.API.Controllers
             return Ok(response);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Put(ProductUpdateRequest productDto)
         {
