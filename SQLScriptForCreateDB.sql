@@ -224,19 +224,22 @@ VALUES
     ((SELECT Id FROM Product WHERE Name = 'Product 3'), 'Version 1', 'Description for Version 1', 7.1, 17.3, 27.5),
     ((SELECT Id FROM Product WHERE Name = 'Product 3'), 'Version 2', 'Description for Version 2', 9.8, 19.6, 29.4);
 
+GO
 
 --   Table User
 CREATE TABLE Users
 (
 
 	Id UNIQUEIDENTIFIER PRIMARY KEY NOT NULL,
-	UserName NVARCHAR(30) NULL UNIQUE,
+	UserName NVARCHAR(30) NOT NULL,
 	FirstName NVARCHAR(100) NOT NULL,
-	Email NVARCHAR(30) NOT NULL UNIQUE,
+	Email NVARCHAR(30) NOT NULL,
 	City NVARCHAR(100) NULL,
 	PasswordHash NVARCHAR(200) NOT NULL,
 )
 
+CREATE UNIQUE INDEX IX_Users_UserName ON dbo.Users (UserName);
+CREATE UNIQUE INDEX IX_Users_Email ON dbo.Users (Email);
 
-
+GO
 
